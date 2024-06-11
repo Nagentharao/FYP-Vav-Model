@@ -1,0 +1,746 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="vav" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <!--
+*******************************************************
+***         U   N   I   T   S                       ***
+*******************************************************
+-->
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="uM">
+        <unit prefix="micro" units="mole"/>
+        <unit exponent="-1" units="liter"/>
+    </units>
+    <units name="per_s">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="uM_per_s">
+        <unit units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="per_uM_per_s">
+        <unit exponent="-1" units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <!--
+*********************************************************
+***       C   O   M   P   O   N   E   N   T   S       ***
+*********************************************************
+-->
+    <component name="environment">
+        <variable name="t" public_interface="out" units="s"/>
+    </component>
+    <component name="vav_activation">
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="J1" units="uM_per_s"/>
+        <variable name="J2" units="uM_per_s"/>
+        <variable name="J3" units="uM_per_s"/>
+        <variable name="J4" units="uM_per_s"/>
+        <variable name="J5" units="uM_per_s"/>
+        <variable name="J6" units="uM_per_s"/>
+        <variable name="J7" units="uM_per_s"/>
+        <variable name="J8" units="uM_per_s"/>
+        <variable name="J12" public_interface="in" units="uM_per_s"/>
+        <variable name="J14" public_interface="in" units="uM_per_s"/>
+        <variable name="J15" public_interface="in" units="uM_per_s"/>
+        <variable name="J13" public_interface="in" units="uM_per_s"/>
+        <variable name="J19" public_interface="in" units="uM_per_s"/>
+        <variable initial_value="0.042743" name="k_f1" units="per_uM_per_s"/>
+        <variable initial_value="0.00610" name="k_r1" units="per_s"/>
+        <variable initial_value="252.742" name="k_f2" units="per_uM_per_s"/>
+        <variable initial_value="568.74" name="k_r2" units="per_s"/>
+        <variable initial_value="1.847" name="k_f3" units="per_s"/>
+        <variable initial_value="0.01891" name="k_r3" units="per_s"/>
+        <variable initial_value="0.0045" name="k_f4" units="per_s"/>
+        <variable initial_value="0.290275" name="k_f5" units="per_uM_per_s"/>
+        <variable initial_value="0.419156" name="k_r5" units="per_s"/>
+        <variable initial_value="1.35418" name="k_f6" units="per_s"/>
+        <variable initial_value="42.3945" name="k_f7" units="per_uM_per_s"/>
+        <variable initial_value="5.55059" name="k_r7" units="per_s"/>
+        <variable initial_value="0.9742" name="k_f8" units="per_s"/>
+        <variable initial_value="0.0286" name="MICA" units="uM"/>
+        <variable initial_value="0.6" name="NKG2D" units="uM"/>
+        <variable initial_value="0" name="MAN" units="uM"/>
+        <variable initial_value="10.97" name="DAP10" units="uM"/>
+        <variable initial_value="0" name="MAND" units="uM"/>
+        <variable initial_value="237.79" name="pLck" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="Lck" public_interface="out" units="uM"/>
+        <variable initial_value="39.18" name="CD45" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="MANpD" units="uM"/>
+        <variable initial_value="0.19" name="Vav" units="uM"/>
+        <variable initial_value="0" name="MANpDVav" units="uM"/>
+        <variable initial_value="0" name="pVav" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="MANDpLck" units="uM"/>
+        <variable initial_value="0" name="MANpDCD45" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J1</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f1</ci>
+                        <ci>MICA</ci>
+                        <ci>NKG2D</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r1</ci>
+                        <ci>MAN</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J2</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f2</ci>
+                        <ci>MAN</ci>
+                        <ci>DAP10</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r2</ci>
+                        <ci>MAND</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J3</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f3</ci>
+                        <ci>MAND</ci>
+                        <ci>pLck</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r3</ci>
+                        <ci>MANDpLck</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J4</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f4</ci>
+                    <ci>MANDpLck</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J5</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f5</ci>
+                        <ci>MANpD</ci>
+                        <ci>CD45</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r5</ci>
+                        <ci>MANpDCD45</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J6</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f6</ci>
+                    <ci>MANpDCD45</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J7</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f7</ci>
+                        <ci>MANpD</ci>
+                        <ci>Vav</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r7</ci>
+                        <ci>MANpDVav</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J8</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f8</ci>
+                    <ci>MANpDVav</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>MICA</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J1</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NKG2D</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J1</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>MAN</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J1</ci>
+                    <ci>J2</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>DAP10</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J2</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pLck</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>J3</ci>
+                    </apply>
+                    <ci>J12</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>Lck</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <ci>J3</ci>
+                    <ci>J13</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>MAND</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <ci>J2</ci>
+                        <ci>J3</ci>
+                    </apply>
+                    <ci>J6</ci>
+                    <ci>J8</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>MANDpLck</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J3</ci>
+                    <ci>J4</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>MANpD</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>J4</ci>
+                        <ci>J5</ci>
+                    </apply>
+                    <ci>J7</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>MANpDCD45</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J5</ci>
+                    <ci>J6</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>CD45</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <minus/>
+                                <ci>J5</ci>
+                            </apply>
+                            <ci>J6</ci>
+                        </apply>
+                        <ci>J14</ci>
+                    </apply>
+                    <ci>J15</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>MANpDVav</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J7</ci>
+                    <ci>J8</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>Vav</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <ci>J7</ci>
+                    </apply>
+                    <ci>J19</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pVav</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J8</ci>
+                    <ci>J19</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="vav_inhibition">
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="J11" units="uM_per_s"/>
+        <variable name="J12" public_interface="out" units="uM_per_s"/>
+        <variable name="J13" public_interface="out" units="uM_per_s"/>
+        <variable name="J14" public_interface="out" units="uM_per_s"/>
+        <variable name="J15" public_interface="out" units="uM_per_s"/>
+        <variable name="J16" units="uM_per_s"/>
+        <variable name="J17" units="uM_per_s"/>
+        <variable name="J19" public_interface="out" units="uM_per_s"/>
+        <variable initial_value="612.38" name="k_f11" units="per_uM_per_s"/>
+        <variable initial_value="1.8" name="k_r11" units="per_s"/>
+        <variable initial_value="47.2605" name="k_f12" units="per_uM_per_s"/>
+        <variable initial_value="0.005935" name="k_r12" units="uM"/>
+        <variable initial_value="0.003178" name="k_f13" units="per_s"/>
+        <variable initial_value="0.0304" name="k_f14" units="per_uM_per_s"/>
+        <variable initial_value="0.04682" name="k_r14" units="per_s"/>
+        <variable initial_value="50.0013" name="k_f15" units="per_s"/>
+        <variable initial_value="110" name="k_f16" units="per_uM_per_s"/>
+        <variable initial_value="0.6" name="k_r16" units="per_s"/>
+        <variable initial_value="0.0340776" name="k_f17" units="per_s"/>
+        <variable initial_value="85.6147" name="k_f19" units="per_s"/>
+        <variable initial_value="1185.74" name="K19" units="uM"/>
+        <variable initial_value="0.2" name="HLAE" units="uM"/>
+        <variable initial_value="17.96" name="NKG2A" units="uM"/>
+        <variable initial_value="0" name="NKHE" units="uM"/>
+        <variable name="pLck" public_interface="in" units="uM"/>
+        <variable name="CD45" public_interface="in" units="uM"/>
+        <variable initial_value="0" name="pNKHE" units="uM"/>
+        <variable initial_value="0" name="NKHEpLck" units="uM"/>
+        <variable initial_value="0" name="pNKHECD45" units="uM"/>
+        <variable initial_value="3.47" name="SHP" units="uM"/>
+        <variable initial_value="0" name="pNKHESHP" units="uM"/>
+        <variable initial_value="0" name="pSHP" units="uM"/>
+        <variable name="pVav" public_interface="in" units="uM"/>
+        <variable name="Lck" public_interface="in" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J11</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f11</ci>
+                        <ci>HLAE</ci>
+                        <ci>NKG2A</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r11</ci>
+                        <ci>NKHE</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J12</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f12</ci>
+                        <ci>NKHE</ci>
+                        <ci>pLck</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r12</ci>
+                        <ci>NKHEpLck</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J13</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f13</ci>
+                    <ci>NKHEpLck</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J14</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f14</ci>
+                        <ci>pNKHE</ci>
+                        <ci>CD45</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r14</ci>
+                        <ci>pNKHECD45</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J15</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f15</ci>
+                    <ci>pNKHECD45</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J16</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f16</ci>
+                        <ci>pNKHE</ci>
+                        <ci>SHP</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r16</ci>
+                        <ci>pNKHESHP</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J17</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f17</ci>
+                    <ci>pNKHESHP</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J19</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>k_f19</ci>
+                        <ci>pSHP</ci>
+                        <ci>pVav</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <ci>K19</ci>
+                        <ci>pVav</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>HLAE</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J11</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NKG2A</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J11</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NKHE</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <ci>J11</ci>
+                        <ci>J12</ci>
+                    </apply>
+                    <ci>J15</ci>
+                    <ci>J17</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pNKHE</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>J13</ci>
+                        <ci>J14</ci>
+                    </apply>
+                    <ci>J16</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NKHEpLck</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J12</ci>
+                    <ci>J13</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pNKHECD45</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J14</ci>
+                    <ci>J15</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pNKHESHP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J16</ci>
+                    <ci>J17</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>SHP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J16</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pSHP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J17</ci>
+                    <ci>J19</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection>
+        <map_components component_1="vav_activation" component_2="environment"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="vav_inhibition" component_2="environment"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="vav_activation" component_2="vav_inhibition"/>
+        <map_variables variable_1="J19" variable_2="J19"/>
+        <map_variables variable_1="J12" variable_2="J12"/>
+        <map_variables variable_1="J13" variable_2="J13"/>
+        <map_variables variable_1="J14" variable_2="J14"/>
+        <map_variables variable_1="J15" variable_2="J15"/>
+        <map_variables variable_1="pLck" variable_2="pLck"/>
+        <map_variables variable_1="Lck" variable_2="Lck"/>
+        <map_variables variable_1="CD45" variable_2="CD45"/>
+        <map_variables variable_1="pVav" variable_2="pVav"/>
+    </connection>
+</model>
